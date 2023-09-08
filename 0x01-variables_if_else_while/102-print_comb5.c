@@ -1,37 +1,43 @@
 #include <stdio.h>
-#include <stdlib.h>
+
 /**
- * main - A program that prints combination of all three digit numbers.
+ * main - Entry point
  *
- * Return: Always 0 (Success)
+ * Return: Always 0 (Succes)
  */
+
 int main(void)
 {
-	int hundreds;
-	int tens;
-	int ones;
-	int num;
+	int tho;
+	int hun;
+	int ten;
+	int bas;
 
-	for (num = 0; num < 1000; num++)
+for ( tho = 0 ; tho < 10 ; tho++)
+{	
+
+	for (hun = 0 ; hun <= 10 ; hun++)
 	{
-		hundreds = num / 100;
-		tens = (num / 10) % 10;
-		ones = num % 10;
-
-		if (hundreds < tens && tens < ones)
+	
+		for (ten = 0 ; ten < 10 ; ten++)
 		{
-			putchar(hundreds + '0');
-			putchar(tens + '0');
-			putchar(ones + '0');
-
-			if (num < 700)
+			for ( bas = 0 ; bas < 10 ; bas++)
 			{
-				putchar(',');
-				putchar(' ');
+				putchar('0' + tho);
+				putchar('0' + hun);
+				putchar(32);
+				putchar('0' + ten);
+				putchar('0' + bas);
+				if (!(tho == 9 && hun == 8))
+				{
+					putchar(',');
+					putchar(32);
+				}
+				bas++;
 			}
 		}
 	}
+}
 	putchar('\n');
-
 	return (0);
 }
