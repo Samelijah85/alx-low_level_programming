@@ -1,43 +1,32 @@
 #include <stdio.h>
-
 /**
- * main - Entry point
- *
- * Return: Always 0 (Success)
- */
-
+* main - Entry point
+*
+* Return: 0
+*/
 int main(void)
 {
-	int tho;
-	int hun;
-	int ten;
-	int bas;
-
-for ( tho = 0 ; tho < 10 ; tho++)
-{	
-
-	for (hun = 0 ; hun <= 10 ; hun++)
-	{
-	
-		for (ten = 0 ; ten < 10 ; ten++)
-		{
-			for ( bas = 0 ; bas < 10 ; bas++)
-			{
-				putchar('0' + tho);
-				putchar('0' + hun);
-				putchar(32);
-				putchar('0' + ten);
-				putchar('0' + bas);
-				if (!(tho == 9 && hun == 8))
-				{
-					putchar(',');
-					putchar(32);
-				}
-				bas++;
-			}
-		}
-	}
+int numLeft;
+int numLast;
+for (numLeft = 0; numLeft < 100; numLeft++)
+{
+for (numLast = 0; numLast < 100; numLast++)
+{
+if (numLeft < numLast)
+{
+putchar(numLeft / 10 + 48);
+putchar(numLeft % 10 + 48);
+putchar(32);
+putchar(numLast / 10 + 48);
+putchar(numLast % 10 + 48);
+if (numLeft < 98)
+{
+putchar(44);
+putchar(32);
 }
-	putchar('\n');
-	return (0);
+}
+}
+}
+putchar('\n');
+return (0);
 }
