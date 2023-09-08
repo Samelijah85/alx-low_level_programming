@@ -1,35 +1,35 @@
 #include <stdio.h>
-#include <stdlib.h>
+
 /**
- * main - A program that prints combination of all two digit numbers.
+ * main - Entry point
  *
- * Return: Always 0 (Success)
+ * Return: Always 0 (Succes)
  */
+
 int main(void)
 {
+	int n;
+	int i;
+	int h;
 
-	int num = 0;
-	int tens;
-	int ones;
-
-	while (num <= 99)
+	for (h = 0 ; h != 8 ; h++)
 	{
-		tens = num % 10;
-		ones = num / 10;
-
-		if (ones < tens)
+		for (n = h + 1 ; n != 9 ; n++)
 		{
-			putchar(ones + '0');
-			putchar(tens + '0');
-			if (num < 89)
-			{
-				putchar(',');
-				putchar(' ');
-			}
+			i = n + 1;
+			do {
+				putchar('0' + h);
+				putchar('0' + n);
+				putchar('0' + i);
+				if (h != 7)
+				{
+					putchar(',');
+					putchar(32);
+				}
+				i++;
+			} while (i != 10);
 		}
-		num++;
 	}
 	putchar('\n');
-
 	return (0);
 }
