@@ -1,55 +1,85 @@
-#include <stdio.h>
-#include <string.h>
+#include "main.h"
 
-char *infinite_add(char *n1, char *n2, char *r, int size_r) {
-    int len1 = strlen(n1);
-    int len2 = strlen(n2);
-    int carry = 0;
-    int max_len = (len1 > len2) ? len1 : len2;
+/**
+ * rev_string - reverse array
+ * @n: integer params
+ * Return: 0
+ */
+void rev_string(char *n)
+{
+    int i = 0;
+    int j = 0;
+    char temp;
 
-    if (max_len + 1 > size_r) {
-        return 0; // Result doesn't fit in the buffer
+    while (*(n + i) != '\0')
+    {
+        i++;
     }
+    i--;
 
-    int i, j, k;
-    for (i = len1 - 1, j = len2 - 1, k = 0; i >= 0 || j >= 0 || carry; i--, j--, k++) {
-        int digit1 = (i >= 0) ? n1[i] - '0' : 0;
-        int digit2 = (j >= 0) ? n2[j] - '0' : 0;
-        int sum = digit1 + digit2 + carry;
-
-        carry = sum / 10;
-        r[k] = (sum % 10) + '0';
+    for (j = 0; j < i; j++, i--)
+    {
+        temp = *(n + j);
+        *(n + j) = *(n + i);
+        *(n + i) = temp;
     }
-
-    r[k] = '\0';
-
-    // Reverse the result string
-    int left = 0;
-    int right = k - 1;
-    while (left < right) {
-        char temp = r[left];
-        r[left] = r[right];
-        r[right] = temp;
-        left++;
-        right--;
-    }
-
-    return r;
 }
 
-int main() {
-    char n1[] = "12345678901234567890";
-    char n2[] = "98765432109876543210";
-    int size_r = 30;
-    char result[size_r];
+/**
+ * infinite_add - add 2 numbers together
+ * @n1: text representation of 1st number to add
+ * @n2: text representation of 2nd number to add
+ * @r: pointer to buffer
+ * @size_r: buffer size
+ * Return: pointer to calling function
+ */
+char *infinite_add(char *n1, char *n2, char *r, int size_r)
+{
+    int overflow = 0, i = 0, j = 0, digits = 0;
+    int val1 = 0, val2 = 0, temp_tot = 0;
 
-    char *sum = infinite_add(n1, n2, result, size_r);
+    while (*(n1 + i) != '\0')
+        i++;
+    while (*(n2 + j) != '\0')
+        j++;
+    i--;
+    j--;
 
-    if (sum) {
-        printf("Sum: %s\n", sum);
-    } else {
-        printf("Result does not fit in the buffer.\n");
+    if (j >= size_r || i >= size_r)
+        return (0);
+
+    while (j >= 0 || i >= 0 || overflow == 1)
+    {
+        if (i < 0)
+            val1 = 0;
+        else
+            val1 = *(n1 + i) - '0';
+
+        if (j < 0)
+            val2 = 0;
+        else
+            val2 = *(n2 + j) - '0';
+
+        temp_tot = val1 + val2 + overflow;
+
+        if (temp_tot >= 10)
+            overflow = 1;
+        else
+            overflow = 0;
+
+        if (digits >= (size_r - 1))
+            return (0);
+
+        *(r + digits) = (temp_tot % 10) + '0';
+        digits++;
+        j--;
+        i--;
     }
 
-    return 0;
+    if (digits == size_r)
+        return (0);
+
+    *(r + digits) = '\0';
+    rev_string(r);
+    return (r);
 } 
