@@ -1,88 +1,92 @@
-#include <stdio.h>
-#include <string.h>
+#include "main.h"
 
 /**
  * rev_string - reverse array
- * @n: array to be reversed
- * Return: void
+ * @n: pointer to the character array
  */
 void rev_string(char *n)
 {
-  int i, j;
-  char temp;
-  
-  i = 0;
-  j = strlen(n) - 1;
-  
-  while (i < j)
-  {
-    temp = n[i];
-    n[i] = n[j];
-    n[j] = temp;
-    i++;
-    j--;
-  }
+    int i = 0, j = 0;
+    char temp;
+
+    while (*(n + i) != '\0')
+    {
+        i++;
+    }
+    i--;
+
+    for (j = 0; j < i; j++, i--)
+    {
+        temp = *(n + j);
+        *(n + j) = *(n + i);
+        *(n + i) = temp;
+    }
 }
 
 /**
  * infinite_add - add two numbers together
- * @n1: first number as a string
- * @n2: second number as a string
- * @r: buffer to store the result
+ * @n1: text representation of the first number
+ * @n2: text representation of the second number
+ * @r: pointer to the buffer to store the result
  * @size_r: size of the buffer
- * Return: pointer to the result
+ * Return: pointer to the result string
  */
 char *infinite_add(char *n1, char *n2, char *r, int size_r)
 {
-  int i, j, k;
-  int len1, len2, carry, sum;
-  
-  len1 = strlen(n1);
-  len2 = strlen(n2);
-  
-  if (len1 >= size_r || len2 >= size_r)
-    return 0;
-  
-  i = len1 - 1;
-  j = len2 - 1;
-  k = 0;
-  carry = 0;
-  
-  while (i >= 0 || j >= 0 || carry > 0)
-  {
-    sum = carry;
-    
-    if (i >= 0)
-      sum += n1[i] - '0';
-    
-    if (j >= 0)
-      sum += n2[j] - '0';
-    
-    r[k] = sum % 10 + '0';
-    carry = sum / 10;
-    
+    int overflow = 0, i = 0, j = 0, digits = 0;
+    int val1 = 0, val2 = 0, temp_tot = 0;
+
+    while (*(n1 + i) != '\0')
+        i++;
+    while (*(n2 + j) != '\0')
+        j++;
     i--;
     j--;
-    k++;
-  }
-  
-  r[k] = '\0';
-  rev_string(r);
-  
-  return r;
-}
-
-int main()
-{
-  char num1[] = "123";
-  char num2[] = "456";
-  char result[100];
-  
-  printf("Adding %s and %s\n", num1, num2);
-  
-  infinite_add(num1, num2, result, sizeof(result));
-  
-  printf("Result: %s\n", result);
-  
-  return 0;
+    
+    if (j >= size_r || i >= size_r || size_r <= 0)
+        return (0);
+    
+    while (j >= 0 || i >= 0 || overflow == 1)
+    {
+        if (i < 0)
+            val1 = 0;
+        else
+            val1 = *(n1 + i) - '0';
+        if (j < 0)
+            val2 = 0;
+        else
+            val2 = *(n2 + j) - '0';
+        
+        temp_tot = val1 + val2 + overflow;
+        overflow = temp_tot / 10;
+        temp_tot %= 10;
+        
+        if (digits + 1 >= size_r)
+            return (0);
+        else
+            *(r + digits) = temp_tot + '0';
+        
+        digits++;
+        i--;
+        j--;
+    }
+    
+    if (digits >= size_r)
+        return (0);
+    else
+    {
+        if (overflow == 1)
+        {
+            if (digits + 1 >= size_r)
+                return (0);
+            else
+            {
+                *(r + digits) = '1';
+                digits++;
+            }
+        }
+        *(r + digits) = '\0';
+        rev_string(r);
+        return (r);
+    }
 } 
