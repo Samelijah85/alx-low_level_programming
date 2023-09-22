@@ -1,68 +1,85 @@
 #include "main.h"
 
 /**
- * Reverse a string.
- * @param str: The string to reverse.
+ * rev_string - Reverses an array of characters
+ * @n: Pointer to the character array
+ * Return: void
  */
-void reverseString(char *str)
+void rev_string(char *n)
 {
-    int length = 0;
-    while (str[length] != '\0')
-    {
-        length++;
-    }
-    length--;
+	int i = 0;
+	int j = 0;
+	char temp;
 
-    for (int start = 0, end = length; start < end; start++, end--)
-    {
-        char temp = str[start];
-        str[start] = str[end];
-        str[end] = temp;
-    }
+	while (*(n + i) != '\0')
+	{
+		i++;
+	}
+	i--;
+
+	for (j = 0; j < i; j++, i--)
+	{
+		temp = *(n + j);
+		*(n + j) = *(n + i);
+		*(n + i) = temp;
+	}
 }
 
 /**
- * Add two infinite numbers represented as strings.
- * @param num1: The first number as a string.
- * @param num2: The second number as a string.
- * @param result: Pointer to the buffer to store the result.
- * @param size: Size of the result buffer.
- * @return Pointer to the result, or NULL in case of an error.
+ * infinite_add - Adds two numbers represented as strings
+ * @n1: Text representation of the first number to add
+ * @n2: Text representation of the second number to add
+ * @r: Pointer to the buffer to store the result
+ * @size_r: Size of the buffer
+ * Return: Pointer to the calling function
  */
-char *addInfiniteNumbers(char *num1, char *num2, char *result, int size)
+char *infinite_add(char *n1, char *n2, char *r, int size_r)
 {
-    int overflow = 0, i = 0, j = 0, digits = 0;
-    int val1 = 0, val2 = 0, tempSum = 0;
+	int overflow = 0, i = 0, j = 0, digits = 0;
+	int val1 = 0, val2 = 0, temp_tot = 0;
 
-    while (num1[i] != '\0') i++;
-    while (num2[j] != '\0') j++;
-    i--; j--;
+	while (*(n1 + i) != '\0')
+		i++;
+	while (*(n2 + j) != '\0')
+		j++;
+	i--;
+	j--;
 
-    if (j >= size || i >= size) return NULL;
+	if (j >= size_r || i >= size_r)
+		return (0);
 
-    while (j >= 0 || i >= 0 || overflow == 1)
-    {
-        if (i < 0) val1 = 0;
-        else val1 = num1[i] - '0';
-        if (j < 0) val2 = 0;
-        else val2 = num2[j] - '0';
+	while (j >= 0 || i >= 0 || overflow == 1)
+	{
+		if (i < 0)
+			val1 = 0;
+		else
+			val1 = *(n1 + i) - '0';
 
-        tempSum = val1 + val2 + overflow;
+		if (j < 0)
+			val2 = 0;
+		else
+			val2 = *(n2 + j) - '0';
 
-        if (tempSum >= 10) overflow = 1;
-        else overflow = 0;
+		temp_tot = val1 + val2 + overflow;
 
-        if (digits >= (size - 1)) return NULL;
+		if (temp_tot >= 10)
+			overflow = 1;
+		else
+			overflow = 0;
 
-        result[digits] = (tempSum % 10) + '0';
-        digits++;
-        j--; i--;
-    }
+		if (digits >= (size_r - 1))
+			return (0);
 
-    if (digits == size) return NULL;
+		*(r + digits) = (temp_tot % 10) + '0';
+		digits++;
+		j--;
+		i--;
+	}
 
-    result[digits] = '\0';
-    reverseString(result);
+	if (digits == size_r)
+		return (0);
 
-    return result;
+	*(r + digits) = '\0';
+	rev_string(r);
+	return (r);
 } 
