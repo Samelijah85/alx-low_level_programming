@@ -67,8 +67,8 @@ char *infinite_add(char *n1, char *n2, char *r, int size_r)
 			return (0);
 		*(r + digits) = (temp_tot % 10) + '0';
 		digits++;
-		j--;
 		i--;
+	        j--;
 	}
 	if (digits == size_r)
 		return (0);
