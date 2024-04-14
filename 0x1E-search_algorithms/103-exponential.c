@@ -12,15 +12,12 @@ void print_array(int *array, int start, int end)
 	for (; start <= end; start++)
 	{
 		printf("%d", array[start]);
-		if (start == end)
-		{
-			printf("\n");
-		}
-		else
+		if (start < end)
 		{
 			printf(", ");
 		}
 	}
+	printf("\n");
 }
 
 /**
